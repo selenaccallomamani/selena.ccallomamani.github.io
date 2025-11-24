@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="qMEclrQhSoi5eygJSHOSP-rApBih5NiOepT9fbIpkI8" />
     <title>Selena Ccallomamani Huamanñahui - Estudiante de Contabilidad</title>
-    <meta name="description" content="Comprometida con la precisión contable, la transparencia financiera y el desarrollo profesional continuo.">
+    <meta name="description" content="Estudiante de 4to semestre de Contabilidad en UCSP. Comprometida con la precisión contable, análisis financiero y el desarrollo profesional continuo.">
     <meta name="author" content="Selena Ccallomamani Huamanñahui">
     <meta name="robots" content="index, follow">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -26,6 +27,7 @@
             background: #9b59b6;
             padding: 20px 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
         }
 
         .nav-container {
@@ -58,6 +60,15 @@
 
         .nav-links a:hover {
             opacity: 0.8;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.8rem;
+            cursor: pointer;
         }
 
         header {
@@ -111,6 +122,7 @@
             transition: all 0.3s;
             border: none;
             cursor: pointer;
+            display: inline-block;
         }
 
         .btn-primary:hover {
@@ -334,24 +346,68 @@
             font-size: 1.1rem;
         }
 
-        .professor-links {
-            display: flex;
-            gap: 15px;
+        .professor-name a {
+            color: #9b59b6;
+            text-decoration: none;
+            transition: color 0.3s;
         }
 
-        .professor-link {
-            color: #fff;
-            background: #9b59b6;
-            padding: 8px 20px;
-            border-radius: 20px;
+        .professor-name a:hover {
+            color: #8e44ad;
+        }
+
+        .companions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .companions-column {
+            background: #f4ecf7;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #9b59b6;
+        }
+
+        .companions-column h3 {
+            color: #9b59b6;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .companion-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .companion-list li {
+            margin-bottom: 12px;
+        }
+
+        .companion-list a {
+            color: #555;
             text-decoration: none;
-            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 5px;
             transition: all 0.3s;
         }
 
-        .professor-link:hover {
-            background: #8e44ad;
-            transform: translateY(-2px);
+        .companion-list a:hover {
+            background: #e8daef;
+            color: #9b59b6;
+            padding-left: 16px;
+        }
+
+        .companion-list a i {
+            font-size: 0.9rem;
+            min-width: 20px;
         }
 
         .contact-form {
@@ -428,6 +484,16 @@
             background: #e8daef;
         }
 
+        .alert-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+
         footer {
             background: #1a1a1a;
             color: #fff;
@@ -444,6 +510,22 @@
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: #9b59b6;
+                padding: 20px;
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
             }
             
             h1 {
@@ -463,6 +545,16 @@
                 flex-direction: column;
                 gap: 15px;
             }
+
+            .skills-section {
+                display: block;
+                margin-right: 0;
+            }
+
+            .companions-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
         }
     </style>
 </head>
@@ -470,9 +562,12 @@
     <nav>
         <div class="nav-container">
             <a href="https://ucsp.edu.pe/" target="_blank" class="logo">
-                <img src="https://i.imgur.com/M7HycDn.png" alt="UCSP" style="height: 50px; width: auto;">
+                <img src="https://i.imgur.com/M7HycDn.png" alt="UCSP Logo" style="height: 50px; width: auto;">
             </a>
-            <ul class="nav-links">
+            <button class="menu-toggle" onclick="toggleMenu()" aria-label="Abrir menú">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#perfil">Perfil</a></li>
                 <li><a href="#cursos">Cursos</a></li>
@@ -489,8 +584,10 @@
         <p class="header-subtitle">Contabilidad | UCSP</p>
         
         <div class="header-buttons">
-            <a href="#contacto" class="btn-primary">Descargar CV</a>
-            <a href="#cursos" class="btn-secondary">Trayectoria</a>
+            <a href="mailto:selena.ccallomamani@ucsp.edu.pe?subject=Solicitud%20de%20CV" class="btn-primary">
+                <i class="fas fa-download"></i> Solicitar CV
+            </a>
+            <a href="#cursos" class="btn-secondary">Ver Trayectoria</a>
         </div>
 
         <p class="header-quote">
@@ -499,11 +596,18 @@
         </p>
 
         <div class="social-icons">
-            <a href="https://www.facebook.com/share/17JQkoMbGD/" target="_blank" class="social-icon" title="Facebook">f</a>
-            <a href="https://www.instagram.com/jonnieqo_?igsh=MWExN2MzN2h0c2VqNg==" target="_blank" class="social-icon" title="Instagram">📷</a>
-            <a href="https://www.linkedin.com/in/selena-ccallomamani-huaman%C3%B1ahui-6b0364311/" target="_blank" class="social-icon" title="LinkedIn">in</a>
-            <a href="#" class="social-icon" title="WhatsApp">📱</a>
-            <a href="#" class="social-icon" title="GitHub">⚡</a>
+            <a href="https://www.facebook.com/share/17JQkoMbGD/" target="_blank" class="social-icon" title="Facebook" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/jonnieqo_?igsh=MWExN2MzN2h0c2VqNg==" target="_blank" class="social-icon" title="Instagram" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/selena-ccallomamani-huaman%C3%B1ahui-6b0364311/" target="_blank" class="social-icon" title="LinkedIn" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://wa.me/51999888777" target="_blank" class="social-icon" title="WhatsApp" aria-label="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
         </div>
     </header>
 
@@ -517,15 +621,15 @@
 
                 <div class="info-grid">
                     <div class="info-item">
-                        <strong>📚 Universidad</strong>
+                        <strong><i class="fas fa-university"></i> Universidad</strong>
                         <p>Universidad Católica San Pablo<br>Contabilidad</p>
                     </div>
                     <div class="info-item">
-                        <strong>📖 Semestre Actual</strong>
+                        <strong><i class="fas fa-book-open"></i> Semestre Actual</strong>
                         <p>4to Semestre (Ciclo IV)</p>
                     </div>
                     <div class="info-item">
-                        <strong>🌐 Idiomas</strong>
+                        <strong><i class="fas fa-globe"></i> Idiomas</strong>
                         <p>Español (Nativo)<br>Inglés (Intermedio-Avanzado)</p>
                     </div>
                 </div>
@@ -612,7 +716,7 @@
             <h2>Sobre Mí</h2>
             <div class="section-content">
                 <div class="skills-section">
-                    <h3>🛠️ Habilidades</h3>
+                    <h3><i class="fas fa-tools"></i> Habilidades</h3>
                     <ul class="skills-list">
                         <li>Liderazgo</li>
                         <li>Gestión de proyectos</li>
@@ -621,7 +725,7 @@
                 </div>
 
                 <div class="skills-section">
-                    <h3>💪 Fortalezas</h3>
+                    <h3><i class="fas fa-fire"></i> Fortalezas</h3>
                     <ul class="skills-list">
                         <li>Adaptabilidad</li>
                         <li>Trabajo en equipo</li>
@@ -630,7 +734,7 @@
                 </div>
 
                 <div class="skills-section">
-                    <h3>🎯 Valores</h3>
+                    <h3><i class="fas fa-heart"></i> Valores</h3>
                     <ul class="skills-list">
                         <li>Solidaridad</li>
                         <li>Compromiso</li>
@@ -645,34 +749,79 @@
             <div class="professors-section">
                 <div class="professor-card">
                     <div class="professor-name">
-                        <a href="https://www.linkedin.com/in/ecuadrosv/" target="_blank" style="color: #9b59b6; text-decoration: none;">Mg. Ernesto Cuadros</a>
-                    </div>
-                    <div class="professor-links">
-                        <a href="#" class="professor-link">GitHub</a>
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <a href="https://www.linkedin.com/in/ecuadrosv/" target="_blank">Mg. Ernesto Cuadros</a>
                     </div>
                 </div>
 
                 <div class="professor-card">
                     <div class="professor-name">
-                        <a href="https://www.linkedin.com/in/josuemontenegro/" target="_blank" style="color: #9b59b6; text-decoration: none;">Mg. Josué Montenegro</a>
-                    </div>
-                    <div class="professor-links">
-                        <a href="#" class="professor-link">GitHub</a>
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <a href="https://www.linkedin.com/in/josuemontenegro/" target="_blank">Mg. Josué Montenegro</a>
                     </div>
                 </div>
 
                 <p style="margin-top: 20px; color: #666; font-style: italic; text-align: center;">
-                    Más profesores serán agregados próximamente...
+                    <i class="fas fa-info-circle"></i> Más profesores serán agregados próximamente...
                 </p>
             </div>
         </section>
 
         <section id="companeros" class="section">
             <h2>Compañeros</h2>
-            <div class="professors-section">
-                <p style="margin-top: 20px; color: #666; font-style: italic; text-align: center;">
-                    Los compañeros serán agregados próximamente...
-                </p>
+            <div class="companions-grid">
+                <!-- Columna GitHub -->
+                <div class="companions-column">
+                    <h3><i class="fab fa-github"></i> GitHub</h3>
+                    <ul class="companion-list">
+                        <li><a href="https://marializcadenashuillcapacco.github.io/pagina-web/" target="_blank"><i class="fas fa-link"></i> Marializ Cadenas Huillcapacco</a></li>
+                        <li><a href="https://traicypaccocolque.github.io/" target="_blank"><i class="fas fa-link"></i> Traicy Pacco Colque</a></li>
+                        <li><a href="https://svr-glitch.github.io/SANTIAGO-VELASCO-RIVERA/" target="_blank"><i class="fas fa-link"></i> Santiago Velasco Rivera</a></li>
+                        <li><a href="https://chaskacandia.github.io/chaskacandiaochoa.github.io/" target="_blank"><i class="fas fa-link"></i> Chaska Candia Ochoa</a></li>
+                        <li><a href="https://deza-ccama.github.io/marilyn-shiomara-deza-ccama/" target="_blank"><i class="fas fa-link"></i> Marilyn Shiomara Deza Ccama</a></li>
+                        <li><a href="https://angelabecerra-jpg.github.io/pagina-web/" target="_blank"><i class="fas fa-link"></i> Angela Becerra</a></li>
+                        <li><a href="https://gustavorodriguezrodriguez.github.io/pagina-web/" target="_blank"><i class="fas fa-link"></i> Gustavo Rodriguez Rodriguez</a></li>
+                        <li><a href="https://hectorrodriguez17.github.io/mywebhr/" target="_blank"><i class="fas fa-link"></i> Hector Ricardo Rodriguez Gaytan</a></li>
+                        <li><a href="https://greciamunoz-sys.github.io/Grecia-Arianne-Consuelo-Munoz-Ventura/" target="_blank"><i class="fas fa-link"></i> Grecia Arianne Consuelo Munoz Ventura</a></li>
+                        <li><a href="https://katerineangelahuaycaniturpo.github.io/pagina-web/" target="_blank"><i class="fas fa-link"></i> Katerine Angela Huaycani Turpo</a></li>
+                        <li><a href="https://juanquispepandia-code.github.io/" target="_blank"><i class="fas fa-link"></i> Juan Quispe Pandia</a></li>
+                        <li><a href="https://cesarluisgonzalesmeneses.github.io/paginaweb/" target="_blank"><i class="fas fa-link"></i> Cesar Luis Gonzales Meneses</a></li>
+                        <li><a href="https://santiagovaldiviezo10.github.io/santiagovaldiviezo" target="_blank"><i class="fas fa-link"></i> Santiago Valdiviezo</a></li>
+                        <li><a href="https://valeriegallardo.github.io/valeriegallardo/" target="_blank"><i class="fas fa-link"></i> Valerie Gallardo</a></li>
+                        <li><a href="https://rodrigomolinap.github.io/RodrigoMolinaP-web/" target="_blank"><i class="fas fa-link"></i> Rodrigo Molina P</a></li>
+                        <li><a href="https://owenvh.github.io" target="_blank"><i class="fas fa-link"></i> Owen Kurt Vilcarani Checcha</a></li>
+                        <li><a href="https://pari-dot.github.io/Mauricio.github.io/" target="_blank"><i class="fas fa-link"></i> Mauricio Joel Pari Gomez</a></li>
+                        <li><a href="https://roaldmacedo-boza.github.io/roaldmacedo.github.io" target="_blank"><i class="fas fa-link"></i> Roald Macedo Boza</a></li>
+                        <li><a href="https://flaviamicaeladiazzevallos1.github.io/" target="_blank"><i class="fas fa-link"></i> Flavia Micaela Díaz Zevallos</a></li>
+                        <li><a href="https://jorgecastro-sudo.github.io/Jorge-David-castro-quispe-/" target="_blank"><i class="fas fa-link"></i> Jorge David Castro Quispe</a></li>
+                        <li><a href="https://josecalizaya-cmyk.github.io/joseluiscalizayachura.github.io/" target="_blank"><i class="fas fa-link"></i> Jose Luis Aldair Calizaya Chura</a></li>
+                        <li><a href="https://leaovaldiviarivas.github.io/leandro-carlos-valdivia-rivas/" target="_blank"><i class="fas fa-link"></i> Leandro Carlos Valdivia Rivas</a></li>
+                        <li><a href="https://arivalencia2025.github.io/Ariana_Emily_Valencia.github.io/" target="_blank"><i class="fas fa-link"></i> Ariana Emily Valencia Patiño</a></li>
+                        <li><a href="https://cielogrp.github.io/Cielo-Geraldine-Romero-Pe-a/" target="_blank"><i class="fas fa-link"></i> Cielo Geraldine Romero Peña</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna LinkedIn -->
+                <div class="companions-column">
+                    <h3><i class="fab fa-linkedin"></i> LinkedIn</h3>
+                    <ul class="companion-list">
+                        <li><a href="https://www.linkedin.com/in/marializcadenashuillcapacco/" target="_blank"><i class="fas fa-user"></i> Marializ Cadenas Huillcapacco</a></li>
+                        <li><a href="https://www.linkedin.com/in/traicy-pacco-colque-01469b386/" target="_blank"><i class="fas fa-user"></i> Traicy Pacco Colque</a></li>
+                        <li><a href="https://www.linkedin.com/in/santiago-velasco-rivera/" target="_blank"><i class="fas fa-user"></i> Santiago Velasco Rivera</a></li>
+                        <li><a href="https://www.linkedin.com/in/chaska-candia-ochoa-277079386/" target="_blank"><i class="fas fa-user"></i> Chaska Candia Ochoa</a></li>
+                        <li><a href="https://www.linkedin.com/in/marilyn-shiomara-deza-ccama-b7a191335/" target="_blank"><i class="fas fa-user"></i> Marilyn Shiomara Deza Ccama</a></li>
+                        <li><a href="https://www.linkedin.com/in/angela-becerra-0b6ab6345/" target="_blank"><i class="fas fa-user"></i> Angela Becerra</a></li>
+                        <li><a href="https://www.linkedin.com/in/hector-ricardo-rodriguez-gaytan-76639437b/" target="_blank"><i class="fas fa-user"></i> Hector Ricardo Rodriguez Gaytan</a></li>
+                        <li><a href="https://pe.linkedin.com/in/santiago-valdiviezo-1a4baa380" target="_blank"><i class="fas fa-user"></i> Santiago Valdiviezo</a></li>
+                        <li><a href="https://www.linkedin.com/in/owen-kurt-vilcarani-checca" target="_blank"><i class="fas fa-user"></i> Owen Kurt Vilcarani Checcha</a></li>
+                        <li><a href="https://www.linkedin.com/in/mauricio-joel-pari-gomez-5b234a380/" target="_blank"><i class="fas fa-user"></i> Mauricio Joel Pari Gomez</a></li>
+                        <li><a href="https://www.linkedin.com/in/roald-macedo-boza-a466a4385" target="_blank"><i class="fas fa-user"></i> Roald Macedo Boza</a></li>
+                        <li><a href="https://www.linkedin.com/in/flavia-micaela-d%C3%ADaz-zevallos" target="_blank"><i class="fas fa-user"></i> Flavia Micaela Díaz Zevallos</a></li>
+                        <li><a href="https://www.linkedin.com/in/jose-luis-aldair-calizaya-chura-90a23b392/" target="_blank"><i class="fas fa-user"></i> Jose Luis Aldair Calizaya Chura</a></li>
+                        <li><a href="https://www.linkedin.com/in/ariana-emily-valencia-pati%C3%B1o-ba0135387/" target="_blank"><i class="fas fa-user"></i> Ariana Emily Valencia Patiño</a></li>
+                        <li><a href="https://www.linkedin.com/in/cielo-geraldine-89a196387" target="_blank"><i class="fas fa-user"></i> Cielo Geraldine Romero Peña</a></li>
+                    </ul>
+                </div>
             </div>
         </section>
 
@@ -680,27 +829,30 @@
             <h2>Contacto</h2>
             <form class="contact-form" onsubmit="handleSubmit(event)">
                 <div class="form-group">
-                    <label>Nombre</label>
-                    <input type="text" placeholder="Tu nombre" required>
+                    <label for="nombre"><i class="fas fa-user"></i> Nombre</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
                 </div>
                 <div class="form-group">
-                    <label>Correo Electrónico</label>
-                    <input type="email" placeholder="tu@email.com" required>
+                    <label for="email"><i class="fas fa-envelope"></i> Correo Electrónico</label>
+                    <input type="email" id="email" name="email" placeholder="tu@email.com" required>
                 </div>
                 <div class="form-group">
-                    <label>Mensaje</label>
-                    <textarea placeholder="Escribe tu mensaje aquí..." required></textarea>
+                    <label for="mensaje"><i class="fas fa-comment-dots"></i> Mensaje</label>
+                    <textarea id="mensaje" name="mensaje" placeholder="Escribe tu mensaje aquí..." required></textarea>
                 </div>
-                <button type="submit" class="submit-btn">Enviar Mensaje</button>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Enviar Mensaje
+                </button>
+                <div id="alertMessage" class="alert-message"></div>
             </form>
 
             <div class="contact-links">
                 <a href="mailto:selena.ccallomamani@ucsp.edu.pe" class="contact-link">
-                    <span>✉️</span>
+                    <i class="fas fa-envelope"></i>
                     <span>selena.ccallomamani@ucsp.edu.pe</span>
                 </a>
-                <a href="#" class="contact-link">
-                    <span>📱</span>
+                <a href="tel:+51999888777" class="contact-link">
+                    <i class="fas fa-phone"></i>
                     <span>+51 999 888 777</span>
                 </a>
             </div>
@@ -708,14 +860,20 @@
     </div>
 
     <footer>
-        <p>© 2025 Selena Ccallomamani Huamanñahui - Estudiante de Contabilidad</p>
+        <p>© 2025 Selena Ccallomamani Huamanñahui - Estudiante de Contabilidad UCSP</p>
     </footer>
 
     <script>
         function handleSubmit(e) {
             e.preventDefault();
-            alert('¡Gracias por tu mensaje! Me pondré en contacto contigo pronto.');
+            const alertDiv = document.getElementById('alertMessage');
+            alertDiv.textContent = '¡Gracias por tu mensaje! Me pondré en contacto contigo pronto.';
+            alertDiv.style.display = 'block';
             e.target.reset();
+            
+            setTimeout(() => {
+                alertDiv.style.display = 'none';
+            }, 5000);
         }
 
         function toggleSemester(header) {
@@ -731,9 +889,17 @@
             }
         }
 
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
+                const navLinks = document.getElementById('navLinks');
+                navLinks.classList.remove('active');
+                
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth' });
